@@ -11,7 +11,9 @@ const LoginForm = ({setUser}) => {
 
     try {
       const user = await loginService.login({username, password})
-
+      window.localStorage.setItem(
+        'loggedBlogAppUser', JSON.stringify(user)
+      )
       setUser(user)
     } catch (error) {
       console.error('wrong credentials:',error.response.data.error)

@@ -6,7 +6,12 @@ import './App.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
+    return loggedUserJSON
+      ? JSON.parse(loggedUserJSON)
+      : null
+  })
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -14,14 +19,20 @@ const App = () => {
     )  
   }, [])
 
+  const logOut = () => {
+    window.localStorage.removeItem('loggedBlogAppUser')
+    setUser(null)
+  }
+
   if (!user) {
     return <LoginForm setUser={setUser}/>
   }
-
+  
   return (
     <div>
       <h2>blogs</h2>
       <p><span>{user.name}</span> logged in</p>
+      <button onClick={logOut}>Log out</button>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
