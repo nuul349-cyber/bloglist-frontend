@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import './App.css'
 
 const App = () => {
@@ -19,6 +20,12 @@ const App = () => {
     )  
   }, [])
 
+  useEffect(() => {
+    if (user) {
+      blogService.setToken(user.token)
+    }
+  }, [user])
+
   const logOut = () => {
     window.localStorage.removeItem('loggedBlogAppUser')
     setUser(null)
@@ -33,6 +40,7 @@ const App = () => {
       <h2>blogs</h2>
       <p><span>{user.name}</span> logged in</p>
       <button onClick={logOut}>Log out</button>
+      <BlogForm setBlogs={setBlogs} blogs={blogs}/>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
