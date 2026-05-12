@@ -1,7 +1,7 @@
 import { useState } from "react"
 import loginService from '../services/login'
 
-const LoginForm = ({setUser}) => {
+const LoginForm = ({setUser, notify}) => {
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
@@ -15,8 +15,10 @@ const LoginForm = ({setUser}) => {
         'loggedBlogAppUser', JSON.stringify(user)
       )
       setUser(user)
+      notify(`${user.name} logged in`)
     } catch (error) {
       console.error('wrong credentials:',error.response.data.error)
+      notify(`wrong credentials: ${error.response.data.error}`, 'error')
     }
   }
 
