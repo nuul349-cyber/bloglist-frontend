@@ -84,10 +84,9 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <h1>Blogs</h1>
       {notifMessage && <Notification message={notifMessage.message} type={notifMessage.type}/>}
-      <p><span>{user.name}</span> logged in</p>
-      <button onClick={logOut}>Log out</button>
+      <p><span>{user.name}</span> logged in <button onClick={logOut}>Log out</button></p>
       <Toggleable buttonLabel='New note' ref={blogFormRef}>
         <BlogForm createBlog={createBlog}/>
       </Toggleable>

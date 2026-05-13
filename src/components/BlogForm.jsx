@@ -13,7 +13,6 @@ const BlogForm = ({createBlog}) => {
       url,
     }
 
-    // REFACTOR so blog creation is in App and handles expired token
     createBlog(blog)
     setTitle('')
     setAuthor('')
@@ -25,7 +24,7 @@ const BlogForm = ({createBlog}) => {
     <h2>Create new blog</h2>
     <form onSubmit={addBlog}>
       <div>
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title">Title:</label>
         <input 
           id="title"
           type="text" 
@@ -34,7 +33,7 @@ const BlogForm = ({createBlog}) => {
         />
       </div>
       <div>
-        <label htmlFor="author">Author</label>
+        <label htmlFor="author">Author:</label>
         <input 
           id="author"
           type="text" 
@@ -43,7 +42,7 @@ const BlogForm = ({createBlog}) => {
         />
       </div>
       <div>
-        <label htmlFor="url">Url</label>
+        <label htmlFor="url">Url:</label>
         <input 
           id="url"
           type="text" 
