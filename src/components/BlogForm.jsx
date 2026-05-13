@@ -1,7 +1,6 @@
 import { useState } from "react"
-import blogsService from '../services/blogs'
 
-const BlogForm = ({setBlogs, blogs, notify}) => {
+const BlogForm = ({createBlog}) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -14,17 +13,11 @@ const BlogForm = ({setBlogs, blogs, notify}) => {
       url,
     }
 
-    try {
-      const returnedBlog = await blogsService.createBlog(blog)
-      setBlogs(blogs.concat(returnedBlog))
-      setTitle('')
-      setAuthor('')
-      setUrl('')
-      notify('New blog created')
-    } catch (reason) {
-      console.log(reason)
-      notify(reason.response.data.error, 'error')
-    }
+    // REFACTOR so blog creation is in App and handles expired token
+    createBlog(blog)
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   }
 
   return (

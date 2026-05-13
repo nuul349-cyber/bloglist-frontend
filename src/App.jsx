@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
+import blogsService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
@@ -27,7 +27,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    blogService
+    blogsService
       .getAll()
       .then(blogs =>
         setBlogs( blogs )
@@ -44,7 +44,7 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      blogService.setToken(user.token)
+      blogsService.setToken(user.token)
     }
   }, [user])
 
@@ -52,6 +52,21 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogAppUser')
     setUser(null)
     notify('Succesfully Logout')
+  }
+
+  const createBlog = async (blog) => {
+    try {
+      const returnedBlog = await blogsService.createBlog(blog)
+      setBlogs(blogs.concat(returnedBlog))
+      notify('New blog created')
+    } catch (reason) {
+      console.log(reason)
+      if (reason.response.data.error.includes('expired')) {
+        console.log('logout')
+        logOut()
+      }
+      notify(reason.response.data.error, 'error')
+    }
   }
 
   if (!user) {
@@ -69,7 +84,7 @@ const App = () => {
       {notifMessage && <Notification message={notifMessage.message} type={notifMessage.type}/>}
       <p><span>{user.name}</span> logged in</p>
       <button onClick={logOut}>Log out</button>
-      <BlogForm setBlogs={setBlogs} blogs={blogs} notify={notify}/>
+      <BlogForm createBlog={createBlog}/>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
