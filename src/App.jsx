@@ -27,11 +27,20 @@ const App = () => {
     }, 5000)
   }
 
+  const sortAndSetBlogs = (blogs) => {
+    blogs.sort((a, b) => {
+      return a.likes - b.likes
+    })
+    blogs.reverse()
+    setBlogs(blogs)
+  }
+
   useEffect(() => {
     blogsService
       .getAll()
-      .then(blogs =>
-        setBlogs( blogs )
+      .then(blogs => {
+        sortAndSetBlogs(blogs)
+      }
       )
       .catch(reason => {
         console.log(reason)
@@ -75,7 +84,7 @@ const App = () => {
 
   const handleLike = async (blog) => {
     const updatedBlog = await  blogsService.likeBlog(blog)
-    setBlogs(blogs.map(b => b.id === blog.id ? updatedBlog : b))
+    sortAndSetBlogs(blogs.map(b => b.id === blog.id ? updatedBlog : b))
   }
 
   const blogFormRef = useRef()
