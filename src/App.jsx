@@ -61,6 +61,7 @@ const App = () => {
       setBlogs(blogs.concat(returnedBlog))
       blogFormRef.current.setVisible(false)
       notify('New blog created')
+      return true
     } catch (reason) {
       console.log(reason)
       if (reason.response.data.error.includes('expired')) {
@@ -68,6 +69,7 @@ const App = () => {
         logOut()
       }
       notify(reason.response.data.error, 'error')
+      return false
     }
   }
 

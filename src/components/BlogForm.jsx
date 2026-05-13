@@ -13,10 +13,12 @@ const BlogForm = ({createBlog}) => {
       url,
     }
 
-    createBlog(blog)
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    const success = await createBlog(blog)
+    if (success) {
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+    }
   }
 
   return (
