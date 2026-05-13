@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogsService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import './App.css'
+import Toggleable from './components/Toggleable'
 
 let timeout = null
 
@@ -58,6 +59,7 @@ const App = () => {
     try {
       const returnedBlog = await blogsService.createBlog(blog)
       setBlogs(blogs.concat(returnedBlog))
+      blogFormRef.current.setVisible(false)
       notify('New blog created')
     } catch (reason) {
       console.log(reason)
@@ -69,6 +71,8 @@ const App = () => {
     }
   }
 
+  const blogFormRef = useRef()
+
   if (!user) {
     return (
       <>
@@ -77,14 +81,16 @@ const App = () => {
       </>
     )
   }
-  
+
   return (
     <div>
       <h2>blogs</h2>
       {notifMessage && <Notification message={notifMessage.message} type={notifMessage.type}/>}
       <p><span>{user.name}</span> logged in</p>
       <button onClick={logOut}>Log out</button>
-      <BlogForm createBlog={createBlog}/>
+      <Toggleable buttonLabel='New note' ref={blogFormRef}>
+        <BlogForm createBlog={createBlog}/>
+      </Toggleable>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
