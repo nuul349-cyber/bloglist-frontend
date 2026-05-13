@@ -87,6 +87,20 @@ const App = () => {
     sortAndSetBlogs(blogs.map(b => b.id === blog.id ? updatedBlog : b))
   }
 
+  const handleDelete = async (blog) => {
+    const answer = window.confirm(`Do you want to remove, ${blog.title} ?`)
+    if (!answer) return
+
+    try {
+      await blogsService.deleteBlog(blog)
+      setBlogs(blogs.filter((b) => b.id !== blog.id))
+      notify(`${blog.title} succesfully deleted`)
+    } catch (reason) {
+      console.log(reason)
+      notify(reason.response.data.error, 'error')
+    }
+  }
+
   const blogFormRef = useRef()
 
   if (!user) {
@@ -107,7 +121,13 @@ const App = () => {
         <BlogForm createBlog={createBlog}/>
       </Toggleable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleLike={() => handleLike({...blog})} />
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          handleLike={() => handleLike({...blog})} 
+          handleDelete={() => handleDelete(blog)} 
+          deleteable={blog.user.username === user.username}
+        />
       )}
     </div>
   )
