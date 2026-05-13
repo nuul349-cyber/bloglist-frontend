@@ -23,9 +23,13 @@ const createBlog = async blog => {
 }
 
 const likeBlog = async blog => {
+  console.log()
+  console.log('likeBlog:before:',blog)
   blog.likes += 1
   blog.user = blog.user.id
+  console.log('likeBlog:after',blog)
   const response = await axios.put(`${baseUrl}/${blog.id}`, blog)
+  console.log('likeBlog:response.data: ',response.data)
   return response.data
 }
 
