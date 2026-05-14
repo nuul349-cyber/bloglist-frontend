@@ -18,9 +18,9 @@ const App = () => {
       : null
   })
   const [notifMessage, setNotifMessage] = useState(null)
-  
+
   const notify = (message, type) => {
-    setNotifMessage({message, type})
+    setNotifMessage({ message, type })
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       setNotifMessage(null)
@@ -49,7 +49,7 @@ const App = () => {
         } else {
           notify(reason.message, 'error')
         }
-      }) 
+      })
   }, [])
 
   useEffect(() => {
@@ -106,8 +106,8 @@ const App = () => {
   if (!user) {
     return (
       <>
-      {notifMessage && <Notification message={notifMessage.message} type={notifMessage.type}/>}
-      <LoginForm setUser={setUser} notify={notify}/>
+        {notifMessage && <Notification message={notifMessage.message} type={notifMessage.type}/>}
+        <LoginForm setUser={setUser} notify={notify}/>
       </>
     )
   }
@@ -121,11 +121,11 @@ const App = () => {
         <BlogForm createBlog={createBlog}/>
       </Toggleable>
       {blogs.map(blog =>
-        <Blog 
-          key={blog.id} 
-          blog={blog} 
-          handleLike={() => handleLike({...blog})} 
-          handleDelete={() => handleDelete(blog)} 
+        <Blog
+          key={blog.id}
+          blog={blog}
+          handleLike={() => handleLike({ ...blog })}
+          handleDelete={() => handleDelete(blog)}
           deleteable={blog.user.username === user.username}
         />
       )}

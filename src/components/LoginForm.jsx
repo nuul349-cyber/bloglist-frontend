@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState } from 'react'
 import loginService from '../services/login'
 
-const LoginForm = ({setUser, notify}) => {
+const LoginForm = ({ setUser, notify }) => {
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
@@ -10,7 +10,7 @@ const LoginForm = ({setUser, notify}) => {
     console.log('logging in with', username, password)
 
     try {
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       window.localStorage.setItem(
         'loggedBlogAppUser', JSON.stringify(user)
       )
@@ -24,28 +24,28 @@ const LoginForm = ({setUser, notify}) => {
 
   return (
     <>
-    <h1>Login</h1>
-    <form onSubmit={handleLogin}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text" 
-          value={username}
-          onChange={({target}) => setUserName(target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input 
-          id="password"
-          type="password" 
-          value={password}
-          onChange={({target}) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
+      <h1>Login</h1>
+      <form onSubmit={handleLogin}>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={({ target }) => setUserName(target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
     </>
   )
 }

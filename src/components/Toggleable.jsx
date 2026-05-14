@@ -1,10 +1,10 @@
-import { useImperativeHandle, useState } from "react"
+import { useImperativeHandle, useState } from 'react'
 
-const Toggleable = ({children, buttonLabel, ref}) => {
+const Toggleable = ({ children, buttonLabel, ref }) => {
   const [visible, setVisible] = useState(false)
-  
+
   useImperativeHandle(ref, () => {
-    return {setVisible}
+    return { setVisible }
   })
 
   if (!visible) {
@@ -15,8 +15,8 @@ const Toggleable = ({children, buttonLabel, ref}) => {
 
   return (
     <>
-    {children}
-    <button onClick={() => setVisible(false)}>cancel</button>
+      {children}
+      <button onClick={() => setVisible(false)}>cancel</button>
     </>
   )
 }

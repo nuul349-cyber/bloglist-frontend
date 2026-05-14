@@ -1,4 +1,4 @@
-const Notification = ({message, type = 'ok'}) => {
+const Notification = ({ message, type = 'ok' }) => {
   if (!message) return null
 
   const styleOk = {
