@@ -34,7 +34,7 @@ const Blog = ({ blog, handleLike, handleDelete, deleteable }) => {
         <p><span>Url:</span> {blog.url}</p>
         <div>
           <span>Likes:</span> {blog.likes}
-          <button style={buttonStyle} onClick={handleLike} >like</button>
+          <button style={buttonStyle} onClick={handleLike} className='like-button' >like</button>
         </div>
         <p><span>Post owner:</span> {blog.user.username}</p>
         {deleteable && <button onClick={handleDelete}>delete</button>}
