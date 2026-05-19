@@ -6,6 +6,7 @@ import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import './App.css'
 import Toggleable from './components/Toggleable'
+import loginService from './services/login'
 
 let timeout = null
 
@@ -54,7 +55,20 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      blogsService.setToken(user.token)
+      console.log('user: ', user)
+      // verify token
+      loginService
+        .verify(user.token)
+        .then(() => {
+          blogsService.setToken(user.token)
+          console.log('Correct token')
+        })
+        .catch(reason => {
+          console.log('verifyLogin:catch:reason: ', reason)
+          window.localStorage.removeItem('loggedBlogAppUser')
+          setUser(null)
+          notify('Login expired', 'error')
+        })
     }
   }, [user])
 
