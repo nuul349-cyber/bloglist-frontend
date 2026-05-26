@@ -15,7 +15,7 @@ const LoginForm = ({ setUser, notify }) => {
         'loggedBlogAppUser', JSON.stringify(user)
       )
       setUser(user)
-      notify(`${user.name} logged in`)
+      notify('Logged succesfully')
     } catch (error) {
       console.error('wrong credentials:',error.response.data.error)
       notify(`wrong credentials: ${error.response.data.error}`, 'error')
