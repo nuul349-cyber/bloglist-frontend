@@ -134,15 +134,17 @@ const App = () => {
       <Toggleable buttonLabel='New note' ref={blogFormRef}>
         <BlogForm createBlog={createBlog}/>
       </Toggleable>
-      {blogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-          handleLike={() => handleLike({ ...blog })}
-          handleDelete={() => handleDelete(blog)}
-          deleteable={blog.user.username === user.username}
-        />
-      )}
+      <div className='blogs'>
+        {blogs.map(blog =>
+          <Blog
+            key={blog.id}
+            blog={blog}
+            handleLike={() => handleLike({ ...blog })}
+            handleDelete={() => handleDelete(blog)}
+            deleteable={blog.user.username === user.username}
+          />
+        )}
+      </div>
     </div>
   )
 }
